@@ -1,5 +1,5 @@
 import { useState } from 'react';
-export default function Player({initialName, playerSymbol}) {
+export default function Player({initialName, playerSymbol, isActive}) {
     const [player, setPlayer] = useState(initialName);
     const [isEditing , setIsEditing] = useState(false);
 
@@ -9,8 +9,9 @@ export default function Player({initialName, playerSymbol}) {
     function handleChange(event){
         setPlayer(event.target.value)
     }
+    //Then the className sets wether the player is active or not , via props.
     return (
-         <li>
+         <li className={isActive ? "active" : undefined}> 
             <span className="player">
                 {isEditing ? 
                 <input type="text" required value={player} onChange={handleChange} /> 
