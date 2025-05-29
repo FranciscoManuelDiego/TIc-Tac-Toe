@@ -1,6 +1,7 @@
 import Player from './components/player.jsx'
 import GameBoard from './components/GameBoard.jsx'
 import Log from './components/Log.jsx'
+import Gameover from './components/Gameover.jsx'
 import { useState } from 'react'
 import {winningCombinations} from './components/winning-combinations.js'
 
@@ -18,6 +19,8 @@ function derivedStateActivePlayer(gameTurns) {
   //This is the current player, it will be changed later
   return gameTurns.length % 2 === 0 ? "X" : "O";
 }
+
+
 
 function App() {
   const [gameTurns, setGameTurns] = useState([])
@@ -46,7 +49,9 @@ function App() {
        winner = players[firstSquareSymbol]; // Set the winner to the symbol of the first square in the combination
        break; // Exit the loop if a winner is found.
     }
+
   }
+  const Draw = gameTurns.length === 9 && !winner
 
   function handleSelectSquare(rowIndex, colIndex) {
     // Prevent moves if there's already a winner or the square is filled
@@ -62,7 +67,7 @@ function App() {
 
   return (
     <>
-      <header>
+      <header id="game-header">
         <h1>React Tic-Tac-Toe</h1>
         <img src="/game-logo.png" alt="Tic-Tac-Toe" />
       </header>
@@ -72,10 +77,12 @@ function App() {
           <Player initialName="Player 1" playerSymbol="X" isActive={currentPlayer === "X"}/>
           <Player initialName="Player 2" playerSymbol="O" isActive={currentPlayer === "O"} />
         </ol>
-        {winner && <p>Winner: {winner}</p>}
+        {winner && <p>{winner}</p>}
         <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard}/>
+         {(Draw || winner) && <Gameover winner={winner} restartGame={() => setGameTurns([])}/>}
       </main>
       <Log turns={gameTurns} />
+     
     </>
   )
 }
