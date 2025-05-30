@@ -4,11 +4,15 @@ export default function Player({initialName, playerSymbol, isActive}) {
     const [isEditing , setIsEditing] = useState(false);
 
     function handleClick() {
-        setIsEditing((isEditing) => !isEditing) // Functions are needed to update the previous state, recommended by React Team
+         if (isEditing && onNameChange) {
+        onNameChange(player);
+        }
+    setIsEditing(editing => !editing);
     }
     function handleChange(event){
         setPlayer(event.target.value)
     }
+    
     //Then the className sets wether the player is active or not , via props.
     return (
          <li className={isActive ? "active" : undefined}> 

@@ -22,8 +22,12 @@ function derivedStateActivePlayer(gameTurns) {
 
 function App() {
   const [gameTurns, setGameTurns] = useState([])
-
   const currentPlayer = derivedStateActivePlayer(gameTurns);
+
+  const [playerNames, setPlayerNames] = useState({
+    X: "Player 1",
+    O: "Player 2"
+  });
 
   // Calculate the board and winner before rendering
   let gameBoard = initialGameBoard.map(row => [...row]);
@@ -34,6 +38,7 @@ function App() {
   }
 
   let winner = null;
+  let winnerSymbol = null; //
   for (const combination of winningCombinations) {
     const firstSquareSymbol = gameBoard[combination[0].row][combination[0].col]
     const secondSquareSymbol = gameBoard[combination[1].row][combination[1].col]
@@ -44,7 +49,8 @@ function App() {
       firstSquareSymbol === secondSquareSymbol &&
       firstSquareSymbol === thirdSquareSymbol
     ) {
-       winner = players[firstSquareSymbol]; // Set the winner to the symbol of the first square in the combination
+       winner = playerNames[firstSquareSymbol]; // Set the winner to the symbol of the first square in the combination
+       winnerSymbol = firstSquareSymbol;
        break; // Exit the loop if a winner is found.
     }
 
@@ -72,12 +78,20 @@ function App() {
       <main id="game-container">
         <h2>Players</h2>
         <ol id="players" className="highlight-player" >
-          <Player initialName="Player 1" playerSymbol="X" isActive={currentPlayer === "X"}/>
-          <Player initialName="Player 2" playerSymbol="O" isActive={currentPlayer === "O"} />
+          <Player initialName={playerNames.X} 
+          playerSymbol="X" 
+          isActive={currentPlayer === "X"}
+          onNameChange={name => setPlayerNames(names => ({...names, X: name}))}/>
+          <Player initialName={playerNames.O} 
+          playerSymbol="O" 
+          isActive={currentPlayer === "O"}
+          onNameChange={name => setPlayerNames(names => ({...names, O: name}))}/>
         </ol>
         {winner && <p>{winner}</p>}
         <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard}/>
-         {(Draw || winner) && <Gameover winner={winner} restartGame={() => setGameTurns([])}/>}
+         {(Draw || winner) && <Gameover winner={winner}
+         winnerSymbol={winnerSymbol}
+         restartGame={() => setGameTurns([])}/>}
       </main>
       <Log turns={gameTurns} />
      
