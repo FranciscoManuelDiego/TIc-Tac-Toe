@@ -20,8 +20,6 @@ function derivedStateActivePlayer(gameTurns) {
   return gameTurns.length % 2 === 0 ? "X" : "O";
 }
 
-
-
 function App() {
   const [gameTurns, setGameTurns] = useState([])
 

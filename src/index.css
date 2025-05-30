@@ -381,7 +381,7 @@ ol {
 
 @media (max-width: 600px) {
   header img {
-    width: 5rem;
+    width: 4rem;
     margin: 1.5rem auto 0.5rem auto;
   }
   h1 {
@@ -418,11 +418,11 @@ ol {
     font-size: 2rem;
   }
   #game-over p {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
   #game-over button {
     font-size: 1rem;
-    padding: 0.3rem 0.7rem;
+    padding: 0.3rem 0.6rem;
   }
 }
 
