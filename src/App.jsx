@@ -1,4 +1,4 @@
-import Player from './components/player.jsx'
+import Player from './components/Player.jsx'
 import GameBoard from './components/GameBoard.jsx'
 import Log from './components/Log.jsx'
 import Gameover from './components/Gameover.jsx'
